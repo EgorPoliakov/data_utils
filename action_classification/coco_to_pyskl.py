@@ -55,6 +55,10 @@ class CocoToPysklConverter:
         self.pyskl_data['annotations'] = pyskl_annotations
         self.pyskl_data['split'][self.split] = [ann['frame_dir'] for ann in pyskl_annotations]
 
+    def save_pyskl(self, save_path):
+        with open(save_path, 'wb') as file:
+            pickle.dump(self.pyskl_data, file)
+
     def map_image_id_to_name_and_description(self):
         id_to_image_name = {}
         id_to_image_description = {}
@@ -116,12 +120,11 @@ class CocoToPysklConverter:
     
 
 
-converter = CocoToPysklConverter('push_ups.json', Action.PUSH_UP)
+converter = CocoToPysklConverter('pull_ups.json', Action.PULL_UP)
 converter.convert_coco_to_pyskl()
-print(converter.pyskl_data['annotations'])
-# with open('../ntu60_hrnet.pkl', 'rb') as f:
-#     data = pickle.load(f)
-# print(data['split']['xsub_val'][0])
-# annotation = data['annotations'][0]
-# print(annotation['total_frames'])
-# print(annotation['keypoint'].shape)
+converter.save_pyskl('pull_ups.pkl')
+with open('pull_ups.pkl', 'rb') as f:
+    data = pickle.load(f)
+annotation = data['annotations'][0]
+print(annotation['total_frames'])
+print(annotation['keypoint'].shape)

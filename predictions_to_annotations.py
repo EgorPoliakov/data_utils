@@ -26,7 +26,7 @@ def convert_predictions(json_path, image_dir, output_path, image_format='.jpg'):
         image_path = f'{image_dir}/{image_name}{image_format}'
         for i, annotation in enumerate(annotations):
             annotation['image_id'] = idx
-            annotation['id'] = i
+            annotation['id'] = idx
             if annotation['category_id'] == 1: #only person class
                 person_annotations.append(annotation)
         overall_annotations.extend(person_annotations)
@@ -39,6 +39,7 @@ def convert_predictions(json_path, image_dir, output_path, image_format='.jpg'):
             "id": idx
         }
         images.append(coco_image)
+        
     data['info'] = {}
     data['licenses'] = [
         {
@@ -50,7 +51,12 @@ def convert_predictions(json_path, image_dir, output_path, image_format='.jpg'):
     data['annotations'] = overall_annotations
     data['images'] = images
     print(len(overall_annotations))
-    with open('aist_box.json', 'w') as f:
+    with open(output_path, 'w') as f:
         json.dump(data, f)
 
-convert_predictions('merged_bbox_kpt.json')
+convert_predictions(
+    '../edgeai-yolov5/runs/test/exp11/pose-large-960_predictions.json', 
+    '../jump_rope_images_every3', 
+    'jump_rope.json', 
+    image_format='.png'
+)

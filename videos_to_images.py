@@ -19,11 +19,10 @@ def extract_images(video_dir, image_format='.png', extract_every=1):
             if success:
                 if frame_number % extract_every == 0:
                     cv2.imwrite(str(image_path), frame)
-            else:
+            else: 
                 break
-            frame_number += 1
         capture.release()
 
-video_dir = 'some_videos'
-extract_every = 3
+video_dir = 'jump_rope'
+extract_every = 1
 extract_images(video_dir, extract_every=extract_every)

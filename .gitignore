@@ -146,6 +146,7 @@ dmypy.json
 *.json
 *.txt
 *.yaml
+*.pkl
 
 out/*
 new_dir/*
